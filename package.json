@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "standard",
     "start-dev": "DEBUG=url-shortener:* NODE_ENV=developing nodemon ./api/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "DEBUG=url-shortener:* NODE_ENV=testing nyc ava tests/ --verbose"
   },
   "repository": {
     "type": "git",
