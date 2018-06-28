@@ -49,7 +49,7 @@ test.serial('getAllUrls', async t => {
 })
 
 test.serial('createUrl', async t => {
-  let url = await service.createUrl(urlExample, host)
+  await service.createUrl(urlExample, host)
   t.true(UrlStub.create.called, 'create should be called on model')
   t.true(UrlStub.create.calledOnce, 'create should be called once')
 })
