@@ -15,6 +15,7 @@ const urlFixtures = require('../fixtures/url')
 let sandbox = null
 let UrlStub = {}
 let service = null
+let single = urlFixtures.single
 
 let where = { where: { active: true }, order: [ ['visits', 'DESC'] ] }
 
@@ -22,6 +23,8 @@ test.beforeEach(async () => {
   sandbox = sinon.createSandbox()
   UrlStub.findAll = sandbox.stub()
   UrlStub.findAll.withArgs(where).returns(Promise.resolve(urlFixtures.all))
+  UrlStub.create = sandbox.stub()
+  UrlStub.create.withArgs(single).returns(Promise.resolve(urlFixtures.byShortUrl(single.short)))
   service = proxyquire('../../api/services/url', {
     '../models/url': UrlStub
   })
