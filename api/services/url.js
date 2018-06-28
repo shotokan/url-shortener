@@ -17,9 +17,6 @@ const chalk = require('chalk')
 const Url = require('../models/url')
 
 class URLService {
-  async getUrlByCode (code) {
-  }
-
   /**
    * Gets all url registers
    *
@@ -117,19 +114,37 @@ class URLService {
       // se crean objetos para ligar la url original con su versión corta, esto para devolver como respuesta al controlador
       for (let url of urlsCreated) {
         news.push({
-					uuid: url.uuid,
-					short: url.short,
-					code: url.code,
-					original: url.original,
-					visits: url.visits,
-					updatedA: url.updatedA
-				})
+          uuid: url.uuid,
+          short: url.short,
+          code: url.code,
+          original: url.original,
+          visits: url.visits,
+          updatedA: url.updatedA
+        })
       }
 
       return news
     } catch (e) {
       console.log(e)
       return null
+    }
+  }
+
+  /**
+   * Search for the original url.
+   * @param {string} code - code from short url.
+   *
+   * @returns {string} original url
+   */
+  async getUrlByCode (code) {
+    try {
+      let url = await Url.findOne({ where: {code: code} })
+      let visits = url.visits + 1
+      // se aumenta en uno la visita
+      await url.update({visits: visits})
+      return url
+    } catch (e) {
+      return ''
     }
   }
 }

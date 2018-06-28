@@ -7,18 +7,16 @@
  * description: se realiza la configuración de las rutas con sus respectivos controladores.
  */
 
-const debug = require('debug')('url-shortener:api:routes')
-const chalk = require('chalk')
-
+const RedirectController = require('../../controllers/redirect')
 const ping = require('./ping')
 const url = require('./url')
 
 module.exports = (app, models) => {
   /**
-     * @api {get} /v1/url/:code Request URL information
+     * @api {get} /:code Request URL information
      * @apiName Redirect
      *
-     * @apiParam {Uuid} code Users unique ID.
+     * @apiParam {code} code for short url.
      *
      * @apiSuccess redirect to original url.
      *
@@ -30,10 +28,7 @@ module.exports = (app, models) => {
      *       "error": "CodeNotFound"
      *     }
      */
-  app.get('/:code', (req, res, next) => {
-    debug(`Routes: ${chalk.green('in route /v1/')}`)
-    res.send({})
-  })
+  app.get('/:code', RedirectController.redirect)
   ping(app)
   url(app)
 }
