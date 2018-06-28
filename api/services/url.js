@@ -117,9 +117,13 @@ class URLService {
       // se crean objetos para ligar la url original con su versión corta, esto para devolver como respuesta al controlador
       for (let url of urlsCreated) {
         news.push({
-          short_url: url.short,
-          original_url: url.original
-        })
+					uuid: url.uuid,
+					short: url.short,
+					code: url.code,
+					original: url.original,
+					visits: url.visits,
+					updatedA: url.updatedA
+				})
       }
 
       return news

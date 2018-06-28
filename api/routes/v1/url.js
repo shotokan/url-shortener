@@ -22,4 +22,15 @@ module.exports = app => {
      *
      */
   app.post('/v1/urls', UrlController.createUrl)
+
+  /**
+     * @api {post} /v1/urls/ Receives a bulk of urls, and create news short urls..
+     * @apiName createUrlBulk
+     *
+     * @apiSuccess return a list of url objects.
+     *
+     * @apiError NotFound No se han podido obtener las urls.
+     *
+     */
+  app.post('/v1/urls/bulk', UrlController.createUrlBulk)
 }

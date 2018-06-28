@@ -38,6 +38,18 @@ class URLController {
       res.status(404).send(response.error('Empty data', 404, uri, 'No se han podido obtener las urls'))
     }
   }
+
+  async createUrlBulk (req, res, next) {
+    debug(`URL: ${chalk.green('creaing a bulk of registers')}`)
+    let body = req.body
+    let uri = utils.getURI(req.protocol, req.originalUrl, req.get('host'))
+    let urls = await URLService.createUrlBulk(body.urls, req.get('host'))
+    if (urls !== null) {
+      res.send(response.success(urls, 200, uri))
+    } else {
+      res.status(400).send(response.error('Empty data', 400, uri, 'No se han podido crear las urls.'))
+    }
+  }
 }
 
 module.exports = new URLController()
