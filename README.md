@@ -132,7 +132,7 @@ $ docker run --name web-postgres -p 5432:5432 -e POSTGRES_PASSWORD=12345678 -e P
 ```
 
 
-#### Estructura
+## Estructura
 
 **db**: contiene los archivos de configuracion para la bd, se usa sequelize.
 
