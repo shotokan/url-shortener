@@ -1,5 +1,12 @@
 'use strict'
 
+/**
+ * author: ivan sabido
+ * date: 28/06/2018
+ * email: <isc_86@hotmail.com>
+ * description: Pruebas para el controlador ping.
+ */
+
 const request = require('supertest')
 const test = require('ava')
 
