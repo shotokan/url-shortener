@@ -7,7 +7,10 @@
  * description: Módulo que tiene las funciones y lógica para crear las url cortas e interactuar con la bd.
  */
 
-const debug = require('debug')('url-shortener:api:services')
+const validUrl = require('valid-url')
+const shortid = require('shortid')
+const uuid4 = require('uuid/v4')
+const debug = require('debug')('url-shortener:api:routes')
 const chalk = require('chalk')
 
 const Url = require('../models/url')
@@ -43,7 +46,39 @@ class URLService {
     }
   }
 
+  /**
+   * Creates and save a short url.
+   * @param {string} url - A url.
+   * @param {host} url - The service's host.
+   *
+   * @returns {Object} An Url register
+   */
   async createUrl (url, host) {
+    try {
+      // se valida que la url sea correcta
+      if (!validUrl.isUri(url)) return ''
+      const urlCode = shortid.generate()
+      const shortUrl = `http://${host}/${urlCode}`
+      let newUrl = {
+        uuid: uuid4(),
+        original: url,
+        short: shortUrl,
+        code: urlCode,
+        visits: 0
+      }
+      let created = await Url.create(newUrl)
+      return {
+        uuid: created.uuid,
+        short: created.short,
+        code: created.code,
+        original: created.original,
+        visits: created.visits,
+        updatedA: created.updatedA
+      }
+    } catch (e) {
+      console.log(e)
+      return null
+    }
   }
 
   async createUrlBulk (urls, host) {
