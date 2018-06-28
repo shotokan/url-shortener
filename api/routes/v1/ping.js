@@ -6,6 +6,8 @@
  * description: Rutas con sus respectivos controadores para el path ping.
  */
 
+const PingController = require('../../controllers/ping')
+
 module.exports = app => {
-  app.get('/v1/ping', (req, res, next) => { res.send({message: 'pong'}) })
+  app.get('/v1/ping', PingController.pong)
 }

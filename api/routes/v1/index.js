@@ -7,9 +7,11 @@
  * description: se realiza la configuración de las rutas con sus respectivos controladores.
  */
 
-const ping = require('./ping')
 const debug = require('debug')('url-shortener:api:routes')
 const chalk = require('chalk')
+
+const ping = require('./ping')
+const url = require('./url')
 
 module.exports = (app, models) => {
   /**
@@ -33,4 +35,5 @@ module.exports = (app, models) => {
     res.send({})
   })
   ping(app)
+  url(app)
 }
