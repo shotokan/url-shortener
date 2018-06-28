@@ -1,0 +1,20 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: npm run start-dev
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: ivan
+      POSTGRES_PASS: 12345678
+      POSTGRES_DB: url-shortener
