@@ -17,6 +17,8 @@ let UrlStub = {}
 let service = null
 let single = urlFixtures.single
 
+let urlExample = 'http://sinonjs.org/releases/v6.0.1/stubs/'
+let host = 'localhost:3000'
 let where = { where: { active: true }, order: [ ['visits', 'DESC'] ] }
 
 test.beforeEach(async () => {
@@ -44,4 +46,10 @@ test.serial('getAllUrls', async t => {
   t.true(UrlStub.findAll.calledOnce, 'findAll should be called once')
   t.true(UrlStub.findAll.calledWith(where), 'findAll should be called with specified id')
   t.deepEqual(urls, urlFixtures.all, 'should be the same')
+})
+
+test.serial('createUrl', async t => {
+  let url = await service.createUrl(urlExample, host)
+  t.true(UrlStub.create.called, 'create should be called on model')
+  t.true(UrlStub.create.calledOnce, 'create should be called once')
 })
