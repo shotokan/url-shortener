@@ -7,7 +7,7 @@
  * description: Controlador para poder realizar health check del servicio.
  */
 
-const debug = require('debug')('url-shortener:api:ping')
+const debug = require('debug')('url-shortener:api:controller:ping')
 const chalk = require('chalk')
 
 class PingController {

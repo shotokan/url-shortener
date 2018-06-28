@@ -11,4 +11,15 @@ module.exports = app => {
      *
      */
   app.get('/v1/urls', UrlController.urlsList)
+
+  /**
+     * @api {post} /v1/urls/ Receives a url and creates a new short url and save it into database.
+     * @apiName createUrl
+     *
+     * @apiSuccess return an url object.
+     *
+     * @apiError NotFound No se han podido obtener las urls.
+     *
+     */
+  app.post('/v1/urls', UrlController.createUrl)
 }

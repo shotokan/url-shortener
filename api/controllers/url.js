@@ -7,11 +7,29 @@
  * description: Controlador con los métodos para realizar la creación y obtención de las urls cortas.
  */
 
+const debug = require('debug')('url-shortener:api:controller:url')
+const chalk = require('chalk')
+
 const URLService = require('../services/url')
 const response = require('../utils/response')
 const utils = require('../utils')
 class URLController {
+  async createUrl (req, res, next) {
+    debug(`URL: ${chalk.green('creating register')}`)
+    let body = req.body
+    let uri = utils.getURI(req.protocol, req.originalUrl, req.get('host'))
+    let url = await URLService.createUrl(body.url, req.get('host'))
+    if (url === '') {
+      res.status(400).send(response.error('Empty data', 400, uri, 'No se pudo acortar la url. La url debe tener un formato correcto.'))
+    } else if (url === null) {
+      res.status(400).send(response.error('Empty data', 400, uri, 'Ha habido un problema y no se ha podido crear la url.'))
+    } else {
+      res.send(response.success(url, 200, uri))
+    }
+  }
+
   async urlsList (req, res, next) {
+    debug(`URL: ${chalk.green('getting registers')}`)
     let uri = utils.getURI(req.protocol, req.originalUrl, req.get('host'))
     let urls = await URLService.getAllUrls()
     if (urls !== null) {
