@@ -17,14 +17,10 @@ class URLController {
     let code = req.params.code
     debug(`REDIRECT: ${chalk.green('redirecting')} ${code}`)
 
-    console.log(req.get('host'))
-    if (code.replace(/\s+/, '') === '') {
-      next()
-    }
     let url = await URLService.getUrlByCode(code)
     if (url === null || url === '') {
       console.log(url)
-      next()
+      return next(Error("Cannot find the page"))
     } else {
       res.redirect(url.original)
     }

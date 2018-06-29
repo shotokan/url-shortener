@@ -49,7 +49,7 @@ routes(app)
 // handling errors
 app.use((err, req, res, next) => {
   debug(`Error: ${chalk.red(err.message)}`)
-  if (err.message.match(/not found/)) {
+  if (err.message.match(/Cannot/)) {
     return res.status(404).send({ error: err.message })
   }
   res.status(500).send({error: err.message})
